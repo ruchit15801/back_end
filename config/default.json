@@ -1,0 +1,22 @@
+{
+    "db_url": "",
+    "jwt_token_secret": "-backend-key",
+    "refresh_jwt_token_secret": "-backend-key",
+    "nodeMail": {
+        "mail": "",
+        "password": "",
+        "service": "gmail"
+    },
+    "timeZone": "Asia/Calcutta",
+    "Winston": {
+        "level": "info"
+    },
+    "aws": {
+        "AWS_Bucket_Name": "",
+        "AWS_Bucket_Region": "",
+        "AWS_Access_Key": "",
+        "AWS_Secret_Key": "",
+        "AWS_bucket_URL": "https://.s3.amazonaws.com"
+    },
+    "fcmKey": ""
+}
