@@ -2,13 +2,13 @@
 import express, { Request, Response } from 'express';
 import * as bodyParser from 'body-parser';
 import http from 'http';
-// import { mongooseConnection } from './database'
+import { mongooseConnection } from './database'
 import * as packageInfo from '../package.json'
 // import { socketServer } from './helper';
 import config from 'config'
 import cors from 'cors'
+import { router } from './routes'
 
-// import { router } from './routes'
 
 const app = express();
 const corsOption = {
@@ -32,11 +32,11 @@ const bad_gateway = (req, res) => { return res.status(502).json({ status: 502, m
 
 app.get('/', health);
 app.get('/health', health);
-// app.use(mongooseConnection)
+app.use(mongooseConnection)
 app.get('/isServerUp', (req, res) => {
     res.send('Server is running ');
 });
-// app.use(router)
+app.use(router);
 app.use('*', bad_gateway);
 
 

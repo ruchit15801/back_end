@@ -29,11 +29,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const bodyParser = __importStar(require("body-parser"));
 const http_1 = __importDefault(require("http"));
-// import { mongooseConnection } from './database'
+const database_1 = require("./database");
 const packageInfo = __importStar(require("../package.json"));
 const cors_1 = __importDefault(require("cors"));
-// import { router } from './routes'
+const routes_1 = require("./routes");
 const app = (0, express_1.default)();
+const corsOption = {
+    origin: "*",
+};
 app.use((0, cors_1.default)());
 app.use(bodyParser.json({ limit: '200mb' }));
 app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }));
@@ -51,11 +54,11 @@ const health = (req, res) => {
 const bad_gateway = (req, res) => { return res.status(502).json({ status: 502, message: "Demo Backend API Bad Gateway" }); };
 app.get('/', health);
 app.get('/health', health);
-// app.use(mongooseConnection)
+app.use(database_1.mongooseConnection);
 app.get('/isServerUp', (req, res) => {
     res.send('Server is running ');
 });
-// app.use(router)
+app.use(routes_1.router);
 app.use('*', bad_gateway);
 let server = new http_1.default.Server(app);
 exports.default = server;
