@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }))
 // console.log(process.env.NODE_ENV);
 const health = (req, res) => {
     return res.status(200).json({
-        message: `Demo Server is Running, Server health is green`,
+        message: `Pokiifuns Server is Running, Server health is green`,
         app: packageInfo.name,
         version: packageInfo.version,
         description: packageInfo.description,
@@ -28,7 +28,7 @@ const health = (req, res) => {
         license: packageInfo.license
     })
 }
-const bad_gateway = (req, res) => { return res.status(502).json({ status: 502, message: "Demo Backend API Bad Gateway" }) }
+const bad_gateway = (req, res) => { return res.status(502).json({ status: 502, message: "Pokiifuns Backend API Bad Gateway" }) }
 
 app.get('/', health);
 app.get('/health', health);
