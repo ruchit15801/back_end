@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { addGame, getGames } from '../../controller/user/games';
+import { getGameById, getGames } from '../../controller/user/games';
 
 const router = Router();
 
-router.post('/', addGame);
 router.get('/', getGames);
+router.get('/:id', getGameById);
 
 export default router; 

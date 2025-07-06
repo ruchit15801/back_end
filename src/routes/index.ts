@@ -1,8 +1,8 @@
 import { Request, Router, Response } from 'express'
 import { userStatus } from '../common'
 import gamesRoutes from './user/games'
+import adminRoutes from './admin'
 // import { userRoutes } from './user'
-// import { adminRoutes } from './admin'
 
 const router = Router()
 const accessControl = (req: Request, res: Response, next: any) => {
@@ -10,7 +10,7 @@ const accessControl = (req: Request, res: Response, next: any) => {
     next()
 }
 
-// router.use('/admin', accessControl, adminRoutes)
+router.use('/admin', adminRoutes)
 router.use('/games', gamesRoutes)
 
 export { router }   

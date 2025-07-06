@@ -7,14 +7,14 @@ exports.router = void 0;
 const express_1 = require("express");
 const common_1 = require("../common");
 const games_1 = __importDefault(require("./user/games"));
+const admin_1 = __importDefault(require("./admin"));
 // import { userRoutes } from './user'
-// import { adminRoutes } from './admin'
 const router = (0, express_1.Router)();
 exports.router = router;
 const accessControl = (req, res, next) => {
     req.headers.userType = common_1.userStatus[req.originalUrl.split('/')[1]];
     next();
 };
-// router.use('/admin', accessControl, adminRoutes)
+router.use('/admin', admin_1.default);
 router.use('/games', games_1.default);
 //# sourceMappingURL=index.js.map
