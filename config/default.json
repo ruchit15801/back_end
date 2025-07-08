@@ -1,5 +1,12 @@
 {
     "db_url": "mongodb+srv://ruchit15801:Ruchit%401415@cluster0.gzmhhgk.mongodb.net/pokiifuns",
     "jwt_token_secret": "pokiifuns-backend-key",
-    "refresh_jwt_token_secret": "pokiifuns-backend-key"
+    "refresh_jwt_token_secret": "pokiifuns-backend-key",
+    "email": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "user": "your-email@gmail.com",
+        "pass": "your-app-password",
+        "adminEmail": "admin@pokiifuns.com"
+    }
 }

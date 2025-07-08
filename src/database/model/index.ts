@@ -1,5 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import Admin from './admin';
+import Contact from './contact';
+import Ads from './ads';
 
 const gameSchema = new mongoose.Schema({
     gameId: { type: Number, required: true, unique: true },
@@ -16,5 +18,5 @@ const gameSchema = new mongoose.Schema({
 
 const Game = mongoose.model('Game', gameSchema);
 
-export { Game, Admin };
+export { Game, Admin, Contact, Ads };
 
