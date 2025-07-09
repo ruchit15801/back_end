@@ -114,12 +114,12 @@ export const deleteGame = async (req: Request, res: Response) => {
 
 export const getAllGames = async (req: Request, res: Response) => {
     try {
-        const page = parseInt(req.query.page as string) || 1;
-        const limit = parseInt(req.query.limit as string) || 10;
-        const search = req.query.search as string;
-        const category = req.query.category as string;
-        const sortBy = req.query.sortBy as string || 'createdAt';
-        const sortOrder = req.query.sortOrder as string === 'asc' ? 1 : -1;
+        const page = parseInt(req.body.page as string) || 1;
+        const limit = parseInt(req.body.limit as string) || 10;
+        const search = req.body.search as string;
+        const category = req.body.category as string;
+        const sortBy = req.body.sortBy as string || 'createdAt';
+        const sortOrder = req.body.sortOrder as string === 'asc' ? 1 : -1;
 
         const skip = (page - 1) * limit;
 

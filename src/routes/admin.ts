@@ -27,7 +27,7 @@ router.get('/profile', authenticateAdmin, adminProfile);
 
 // Game management routes (protected)
 router.post('/games', authenticateAdmin, addGame);
-router.get('/games', authenticateAdmin, getAllGames);
+router.post('/getGames', authenticateAdmin, getAllGames);
 router.get('/games/:gameId', authenticateAdmin, getGameById);
 router.put('/games/:gameId', authenticateAdmin, updateGame);
 router.delete('/games/:gameId', authenticateAdmin, deleteGame);
