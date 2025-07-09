@@ -1,28 +1,52 @@
 import { Request, Response } from 'express';
 import { Game } from '../../database/model';
 
+const generate6DigitGameId = async (): Promise<number> => {
+    let gameId: number;
+    let exists = true;
+
+    while (exists) {
+        gameId = Math.floor(100000 + Math.random() * 900000);
+        const existing = await Game.findOne({ gameId });
+        exists = !!existing;
+    }
+
+    return gameId;
+};
+
 export const addGame = async (req: Request, res: Response) => {
     try {
         const gameData = req.body;
 
-        // Validation
-        if (!gameData.title || !gameData.url || !gameData.gameId) {
+        if (!gameData.title || !gameData.url) {
             return res.status(400).json({
                 status: 400,
-                message: 'Title, URL, and gameId are required'
+                message: 'Title and URL are required',
             });
         }
 
-        // Check if gameId already exists
-        const existingGame = await Game.findOne({ gameId: gameData.gameId });
-        if (existingGame) {
-            return res.status(409).json({
-                status: 409,
-                message: 'Game with this gameId already exists'
-            });
+        if (!gameData.gameId) {
+            gameData.gameId = await generate6DigitGameId();
+        } else {
+            const parsedId = parseInt(gameData.gameId);
+            if (isNaN(parsedId) || parsedId < 100000 || parsedId > 999999) {
+                return res.status(400).json({
+                    status: 400,
+                    message: 'Provided gameId must be a 6-digit number',
+                });
+            }
+
+            const existingGame = await Game.findOne({ gameId: parsedId });
+            if (existingGame) {
+                return res.status(409).json({
+                    status: 409,
+                    message: 'Game with this gameId already exists',
+                });
+            }
+
+            gameData.gameId = parsedId;
         }
 
-        // Process tags if provided as string
         if (typeof gameData.tags === 'string') {
             gameData.tags = gameData.tags.split(',').map(tag => tag.trim());
         }
@@ -33,14 +57,15 @@ export const addGame = async (req: Request, res: Response) => {
         res.status(201).json({
             status: 201,
             message: 'Game added successfully',
-            data: { game: newGame }
+            data: { game: newGame },
         });
+
     } catch (error) {
         console.error('Add game error:', error);
         res.status(500).json({
             status: 500,
             message: 'Internal server error',
-            error: error.message
+            error: error.message,
         });
     }
 };
