@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Game } from '../../database/model';
+import { Contact, Game } from '../../database/model';
 
 const generate6DigitGameId = async (): Promise<number> => {
     let gameId: number;
@@ -231,4 +231,29 @@ export const getGameById = async (req: Request, res: Response) => {
             error: error.message
         });
     }
-}; 
+};
+
+export const getDashboardStats = async (req: Request, res: Response) => {
+    try {
+        const [gameCount, contactCount] = await Promise.all([
+            Game.countDocuments(),
+            Contact.countDocuments(),
+        ]);
+
+        return res.status(200).json({
+            status: 200,
+            message: 'Dashboard statistics fetched successfully',
+            data: {
+                total_games: gameCount,
+                total_contact_messages: contactCount,
+            },
+        });
+    } catch (error) {
+        console.error('Dashboard stats error:', error);
+        return res.status(500).json({
+            status: 500,
+            message: 'Internal server error',
+            error: error.message,
+        });
+    }
+};

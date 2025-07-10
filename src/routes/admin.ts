@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { adminSignup, adminSignin, adminProfile, refreshToken } from '../controller/admin/auth';
-import { addGame, updateGame, deleteGame, getAllGames, getGameById } from '../controller/admin/games';
+import { addGame, updateGame, deleteGame, getAllGames, getGameById, getDashboardStats } from '../controller/admin/games';
 import { getAllContacts, getContactById } from '../controller/admin/contact';
 import {
     addAd,
@@ -24,6 +24,9 @@ router.post('/refresh-token', refreshToken);
 
 // Protected routes (authentication required)
 router.get('/profile', authenticateAdmin, adminProfile);
+
+// Dashboard 
+router.get('/dashboard', authenticateAdmin, getDashboardStats);
 
 // Game management routes (protected)
 router.post('/games', authenticateAdmin, addGame);
